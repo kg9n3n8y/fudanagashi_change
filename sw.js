@@ -1,5 +1,5 @@
 // Cache name
-const CACHE_NAME = 'fudanagashi-caches';
+const CACHE_NAME = 'fudanagashi-change-caches';
 // Cache targets
 const urlsToCache = [
   './',
