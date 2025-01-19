@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("dblclick", function(e) { e.preventDefault(); }, { passive: false });
 
     // 札を混ぜる
-    let fudaOrder = [...fudalist];
-    fudaOrder = shuffleArray(fudaOrder)
+    let fudaOrder = shuffleArray(fudalist)
 
     let startTime;
     let currentFuda = 0;
@@ -63,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const currentKimariji = fudaOrder[order].kimariji;
 
         // order番目より後の要素を抽出
-        const targetFuda = Object.values(fudalist).slice(order + 1);
+        const targetFuda = fudalist.slice(order + 1);
 
         // 決まり字のリストを作成
         const kimarijis = targetFuda.map(fuda => fuda.kimariji);
@@ -71,10 +70,10 @@ document.addEventListener("DOMContentLoaded", function() {
         // 1文字目から3文字目までチェック
         for(let i = 1; i <= 3; i++) {
             // currentKimarijiのi文字目までを取得
-            const checkStr = currentKimariji.substring(0, i);
+            let checkStr = currentKimariji.substring(0, i);
             
             // kimarijisの中にcheckStrで始まる文字列があるかチェック
-            const exists = kimarijis.some(k => k.startsWith(checkStr));
+            let exists = kimarijis.some(k => k.startsWith(checkStr));
             
             // 存在しなければその文字列を返す
             if(!exists) {
@@ -89,8 +88,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // 札リストから選ばれた札を表示
     function displayFuda(order) {
         const fuda = fudaOrder[order];
+
+        // 50%の確率で逆向きに表示
         const isFlipped = Math.random() < 0.5;
         imageElement.src = isFlipped ? fuda.reverse : fuda.normal;
+
+        // 決まり字(変化後)の表示
         document.getElementById('kimariji').textContent = getKimariji(order);
     }
 
